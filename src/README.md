@@ -15,10 +15,9 @@ src/
   |- assets/
   |- common/
   |  |- plusOne/
-  |- less/
-  |  |- main.less
-  |  |- variables.less
-  |- index.html
+  |- sass/
+  |  |- main.scss
+    |- index.html
 ```
 
 - `src/app/` - application-specific code, i.e. code not likely to be reused in
@@ -27,7 +26,7 @@ src/
   [Read more &raquo;](assets/README.md)
 - `src/common/` - third-party libraries or components likely to be reused in
   another application. [Read more &raquo;](common/README.md)
-- `src/less/` - LESS CSS files. [Read more &raquo;](less/README.md)
+- `src/sass/` - SASS CSS files. 
 - `src/index.html` - this is the HTML document of the single-page application.
   See below.
 

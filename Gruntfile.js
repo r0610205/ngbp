@@ -162,9 +162,9 @@ module.exports = function ( grunt ) {
       build_css: {
         src: [
           '<%= vendor_files.css %>',
-          '<%= build_dir %>/src/main.css'
+          '<%= build_dir %>/src/css/main.css'
         ],
-        dest: '<%= build_dir %>/src/main.css'
+        dest: '<%= build_dir %>/src/css/main.css'
       },
       /**
        * The `compile_js` target is the concatenation of our application source

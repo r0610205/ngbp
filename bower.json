@@ -2,12 +2,15 @@
   "name": "ngbp-boostrap-saas",
   "version": "0.3.1",
   "devDependencies": {
-    "angular": "~1.2.10",
-    "angular-mocks": "~1.2.10",
-    "saas-bootstrap": "~3.0.2",
+    "angular": "1.2.10",
+    "angular-mocks": "1.2.10",
+    "sass-bootstrap": "~3.0.2",
     "angular-bootstrap": "~0.10.0",
-    "angular-ui-router": "~0.2.8",
+    "angular-ui-router": "0.2.7",
     "angular-ui-utils": "~0.1.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "resolutions": {
+    "angular": "1.2.10"
+  }
 }
