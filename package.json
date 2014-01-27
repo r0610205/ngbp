@@ -1,6 +1,6 @@
 {
   "author": "code: Josh David Miller, edits: Sergey Bobrov",
-  "name": "ng-bootstrap-sass",
+  "name": "ngbp-saas-tmpl",
   "version": "0.0.1",
   "licenses": {
     "type": "MIT",
@@ -26,6 +26,8 @@
     "grunt-contrib-coffee": "~0.8.2",
     "grunt-coffeelint": "~0.0.8",
     "grunt-conventional-changelog": "~1.0.0",
-    "grunt-bump": "~0.0.13"
+    "grunt-bump": "~0.0.13",
+    "grunt-sass-convert": "~0.1.4",
+    "grunt-contrib-cssmin": "~0.7.0"
   }
 }

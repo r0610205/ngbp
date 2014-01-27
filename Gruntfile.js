@@ -10,11 +10,13 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-sass-convert');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
@@ -166,6 +168,14 @@ module.exports = function ( grunt ) {
         ],
         dest: '<%= build_dir %>/src/css/main.css'
       },
+
+      compile_css: {
+        src: [
+          '<%= vendor_files.css %>',
+          '<%= build_dir %>/src/css/main.css'
+        ],
+        dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+      },
       /**
        * The `compile_js` target is the concatenation of our application source
        * code and all specified vendor source code into a single file.
@@ -237,6 +247,26 @@ module.exports = function ( grunt ) {
       }
     },
 
+    cssmin: {
+      minify: {        
+        expand: true,
+        cwd: '<%= compile_dir %>/assets/',
+        src: '*.css',
+        dest:'<%= compile_dir %>/assets/'
+      }
+    },
+
+    'sass-convert': {
+      options: {
+        from: 'sass',
+        to: 'scss'
+      },
+      files: {
+        src: ['src/**/*.sass'],
+        dest: '.'
+
+      },
+    },
 
     /**
      * `sass` handles our SCSS compilation automatically.
@@ -382,9 +412,8 @@ module.exports = function ( grunt ) {
       compile: {
         dir: '<%= compile_dir %>',
         src: [
-          '<%= concat.compile_js.dest %>',
-          '<%= vendor_files.css %>',
-          '<%= build_dir %>/src/**/*.css'
+          '<%= concat.compile_js.dest %>',          
+          '<%= concat.compile_css.dest %>'
         ]
       }
     },
@@ -494,8 +523,8 @@ module.exports = function ( grunt ) {
        * When the CSS files change, we need to compile and minify them.
        */
       sass: {
-        files: [ 'src/**/*.scss' ],
-        tasks: [ 'sass:build' ]
+        files: [ 'src/**/*.sass' ],
+        tasks: [ 'sass-convert', 'sass:build' ]
       },
 
       /**
@@ -549,7 +578,7 @@ module.exports = function ( grunt ) {
    * The `build` task gets your app ready to run for development and testing.
    */
   grunt.registerTask( 'build', [
-    'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'sass:build',
+    'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'sass-convert', 'sass:build',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
     'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig',
     'karma:continuous' 
@@ -560,7 +589,9 @@ module.exports = function ( grunt ) {
    * minifying your code.
    */
   grunt.registerTask( 'compile', [
-    'sass:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile'
+     'sass-convert', 'sass:compile', 'copy:compile_assets', 'ngmin', 
+     'concat:compile_css','concat:compile_js',
+     'cssmin:minify', 'uglify', 'index:compile'
   ]);
 
   /**
